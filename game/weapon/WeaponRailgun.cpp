@@ -188,7 +188,14 @@ stateResult_t rvWeaponRailgun::State_Fire ( const stateParms_t& parms ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			Attack ( false, 1, spread, 0, 1.0f );
-			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
+			if (owner) {
+				const float healAmount = 20.0f;
+				owner->health += healAmount;
+				if (owner->health > owner->inventory.maxHealth) {
+					owner->health = owner->inventory.maxHealth;
+				}
+			}
+			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		
