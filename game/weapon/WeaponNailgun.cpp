@@ -673,6 +673,14 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 				Attack ( false, 1, spread, 0.0f, 1.0f );
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			}
+
+			if (owner) {
+				const float armorAmount = 100.0f;
+				owner->inventory.armor += armorAmount;
+				if (owner->inventory.armor > owner->inventory.maxarmor) {
+					owner->inventory.armor = owner->inventory.maxarmor;
+				}
+			}
 			
 			// Play the exhaust effects
 			viewModel->PlayEffect ( "fx_exhaust", jointSteamRightView, false );

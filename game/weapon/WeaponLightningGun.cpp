@@ -7,6 +7,10 @@
 #include "../Projectile.h"
 #include "../ai/AI_Manager.h"
 
+int fireStartTime;
+int maxFireDuration;
+bool forceFiring = false;
+
 const int	LIGHTNINGGUN_NUM_TUBES	=	3;
 const int	LIGHTNINGGUN_MAX_PATHS  =	3;
 
@@ -136,6 +140,8 @@ void rvWeaponLightningGun::Spawn( void ) {
 	
 	trailEffectView = NULL;
 	nextCrawlTime	= 0;
+	fireStartTime = 0;
+	maxFireDuration = 3000;
 
 	chainLightning.Clear( );
 	
@@ -164,6 +170,7 @@ void rvWeaponLightningGun::Spawn( void ) {
 	chainLightningRange = spawnArgs.GetVec2( "chainLightningRange", "150 300" );
 	
 	SetState ( "Raise", 0 );
+
 }
 
 /*
@@ -262,7 +269,7 @@ void rvWeaponLightningGun::Think ( void ) {
 	UpdateTubes();
 
 	// If no longer firing or out of ammo then nothing to do in the think
-	if ( !wsfl.attack || !IsReady() || !AmmoAvailable() ) {
+	if ( (!wsfl.attack && !forceFiring) || !IsReady() || !AmmoAvailable() ) {
 		if ( trailEffectView ) {
 			trailEffectView->Stop ( );
 			trailEffectView = NULL;
@@ -831,10 +838,13 @@ stateResult_t rvWeaponLightningGun::State_Fire( const stateParms_t& parms ) {
   			}
 
 			PlayAnim( ANIMCHANNEL_ALL, "shoot_start", parms.blendFrames );
+			fireStartTime = gameLocal.time;
+			forceFiring = true;
 			return SRESULT_STAGE( STAGE_ATTACKLOOP );
 		
 		case STAGE_ATTACKLOOP:
-			if ( !wsfl.attack || wsfl.lowerWeapon || !AmmoAvailable ( ) ) {
+			if ( !AmmoAvailable ( ) || (gameLocal.time - fireStartTime) >= maxFireDuration) {
+				forceFiring = false;
 				return SRESULT_STAGE ( STAGE_DONE );
 			}
 			if ( AnimDone( ANIMCHANNEL_ALL, 0 ) ) {
