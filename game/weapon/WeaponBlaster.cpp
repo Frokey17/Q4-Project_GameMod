@@ -4,6 +4,9 @@
 #include "../Game_local.h"
 #include "../Weapon.h"
 
+const int BURST_COUNT = 5;
+const int BURST_DELAY = 400;
+
 #define BLASTER_SPARM_CHARGEGLOW		6
 
 class rvWeaponBlaster : public rvWeapon {
@@ -32,6 +35,7 @@ private:
 	idVec2				chargeGlow;
 	bool				fireForced;
 	int					fireHeldTime;
+	int                 burstShotsFired;
 
 	stateResult_t		State_Raise				( const stateParms_t& parms );
 	stateResult_t		State_Lower				( const stateParms_t& parms );
@@ -155,6 +159,7 @@ void rvWeaponBlaster::Spawn ( void ) {
 
 	fireHeldTime		= 0;
 	fireForced			= false;
+	burstShotsFired		= 0;
 			
 	Flashlight ( owner->IsFlashlightOn() );
 }
@@ -400,8 +405,12 @@ rvWeaponBlaster::State_Fire
 stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 	enum {
 		FIRE_INIT,
+		FIRE_BURST,
 		FIRE_WAIT,
 	};	
+
+	static int burst = 0;
+
 	switch ( parms.stage ) {
 		case FIRE_INIT:	
 
@@ -427,17 +436,33 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 
 	
 			if ( gameLocal.time - fireHeldTime > chargeTime ) {	
-				Attack ( true, 1, spread, 0, 0.5f );
+				burstShotsFired = 0;
+				nextAttackTime = gameLocal.time;
 				PlayEffect ( "fx_chargedflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "chargedfire", parms.blendFrames );
+				return SRESULT_STAGE(FIRE_BURST);
 			} else {
 				Attack ( false, 1, spread, 0, 0.5f );
 				PlayEffect ( "fx_normalflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "fire", parms.blendFrames );
+				fireHeldTime = 0;
+				return SRESULT_STAGE(FIRE_WAIT);
 			}
-			fireHeldTime = 0;
+
+		case FIRE_BURST:
+			if (gameLocal.time < nextAttackTime) {
+				return SRESULT_WAIT;
+			}
+			if (burstShotsFired < BURST_COUNT) {
+				Attack(false, 1, spread, 0, 1.0f);
+				burstShotsFired++;
+				nextAttackTime = gameLocal.time + BURST_DELAY;
+				return SRESULT_WAIT;
+			}
 			
-			return SRESULT_STAGE(FIRE_WAIT);
+			fireHeldTime = 0;
+			SetState("Idle", 4);
+			return SRESULT_DONE;
 		
 		case FIRE_WAIT:
 			if ( AnimDone ( ANIMCHANNEL_ALL, 4 ) ) {
