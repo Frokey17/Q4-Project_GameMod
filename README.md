@@ -61,5 +61,5 @@ Mods → fantasyMod → Load Mod
 - Commands 
     - Added new command "abilities" 
         - Slows down game time with one click, and then sets it back to normal with another
-        - Linked to L key
+        - Linked to Q key
 
