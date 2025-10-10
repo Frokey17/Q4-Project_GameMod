@@ -12,7 +12,7 @@ This mod takes some features from the game Final Fantasy VII Remake and implemen
 ## How To Play
 
 1. Go to my git hub account which should be linked in Authors
-2. Click on Q4-Project_GameMod and then click on the branch named rocket_mod
+2. Click on Q4-Project_GameMod and then click on the branch named fantasy_mod
 3. Download or extract the mod folder and implement it as a new folder into your Quake 4 file
 4. Launch Quake 4 and from the main menu, select:
 Mods → fantasyMod → Load Mod
