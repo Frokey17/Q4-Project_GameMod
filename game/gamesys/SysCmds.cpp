@@ -576,6 +576,13 @@ void Cmd_CenterView_f( const idCmdArgs &args ) {
 	player->SetViewAngles( ang );
 }
 
+/*
+==================
+
+Custom Commands
+
+==================
+*/
 
 void Cmd_Abilities_f(const idCmdArgs& args) {
 	idPlayer* player;
@@ -591,6 +598,17 @@ void Cmd_Abilities_f(const idCmdArgs& args) {
 	else {
 		cvarSystem->SetCVarFloat("timeScale", 1.0f); // buts time back to normal on second click
 	}
+}
+
+void Cmd_ModHelp_f(const idCmdArgs& args) {
+	gameLocal.Printf("Helpful Tips:\n");
+	gameLocal.Printf("1. Make sure to use the spawnTeam command first to spawn the other members of your team.\n");
+	gameLocal.Printf("2. Make sure to look at the README.md to see what the abilities look like and do. Also look at it to see the new keybinds\n");
+	gameLocal.Printf("\n");
+	gameLocal.Printf("New Mod Commands:\n");
+	gameLocal.Printf("1. abilities			-	Slows game time and opens UI for the ability menu to show the different abilities.\n");
+	gameLocal.Printf("2. spawnTeam			-	Spawns 2 extra NPCs who can fight on their own and use abilities.\n");
+	gameLocal.Printf("3. switchPlayers		-	Switches the ability command between you and the 2 other NPCs.\n");
 }
  
 /*
@@ -3250,6 +3268,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
 // RITUAL END
 	cmdSystem->AddCommand("abilities", Cmd_Abilities_f, CMD_FL_GAME, "enables the ability menu and slows game time");
+	cmdSystem->AddCommand("modhelp", Cmd_ModHelp_f, CMD_FL_GAME, "shows both some helpful tips and a list of new commands in the console");
 
 }
 
