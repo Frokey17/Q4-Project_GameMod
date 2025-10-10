@@ -62,4 +62,10 @@ Mods → fantasyMod → Load Mod
     - Added new command "abilities" 
         - Slows down game time with one click, and then sets it back to normal with another
         - Linked to Q key
+    - Added new command "spawnTeam" 
+        - Spawns 2 NPCs that can fight alongside you and use abilites
+        - Linked to L key
+    - Added new command "abilities" 
+        - Switches the ability command between you and the 2 other NPCs
+        - Linked to E key
 
