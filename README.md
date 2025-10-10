@@ -23,39 +23,39 @@ Mods → fantasyMod → Load Mod
     
 ## Features
 
-- Weapons 
-    - Blaster
+- Weapons (These weapons in Quake 4 have been altered to resemble abilities/weapon abilities from Final Fantasy VII Remake)
+    - Blaster (Overcharge)
         - Changed the charged blast to a bust fire
         - Tweaked damage
-    - Dark Matter Gun
+    - Dark Matter Gun (Chi trap)
         - Projectile now stays in place instead of moving
         - Tweaked damage
-    - Hyperblaster
+    - Hyperblaster (Focused shot)
         - Lowered firerate 
         - Lowered speed of Projectile
         - Tweaked damage
-    - Machine Gun
+    - Machine Gun (Maximum fury)
         - Changed from fully automatic to burst fire
         - Increased spread
         - Tweaked damage
-    - Grenade Launcher
+    - Grenade Launcher (Blade burst)
         - Now fires 5 grenandes in a large spread
         - Decreased explosion radius
         - Tweaked damage
-    - Shotgun
+    - Shotgun (Point blank)
         - Decreased spread
         - Tweaked damage
-    - Railgun
+    - Railgun (Soul drain)
         - Attacks now heal player for 20 health points
         - Tweaked damage
-    - Lightning Gun
+    - Lightning Gun (Ray of judgement)
         - Changed the constent fire to a burst fire
         - Tweaked damage
-    - Napalm Launcher
+    - Napalm Launcher (Sorcerouse storm)
         - The attack now lands right at the players feat 
         - Attacks no longer do damage to the player
         - Tweaked damage
-    - Nailgun
+    - Nailgun (Steel skin)
         - Atacks now restore player armor to 100
         - Tweaked damage
 - Commands
