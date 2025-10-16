@@ -584,6 +584,55 @@ Custom Commands
 ==================
 */
 
+void Cmd_SpawnTeam_f(const idCmdArgs& args) {
+#ifndef _MPBETA
+	const char* key, * value;
+	int			i;
+	float		yaw;
+	idVec3		org;
+	idPlayer* player;
+	idDict		dict;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+
+	yaw = player->viewAngles.yaw;
+
+	for (int j=0; j < 2; j++) {
+		value = "char_marine";
+
+		dict.Clear();
+		dict.Set("classname", value);
+		dict.Set("angle", va("%f", yaw + 180));
+
+		org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * 80 + idVec3(0, 0, 1);
+		dict.Set("origin", org.ToString());
+
+		for (i = 2; i < args.Argc() - 1; i += 2) {
+
+			key = args.Argv(i);
+			value = args.Argv(i + 1);
+
+			dict.Set(key, value);
+		}
+
+	// RAVEN BEGIN
+	// kfuller: want to know the name of the entity I spawned
+		idEntity* newEnt = NULL;
+		gameLocal.SpawnEntityDef(dict, &newEnt);
+
+		if (newEnt) {
+			gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
+		}
+
+		yaw += 30;
+	}
+	// RAVEN END
+#endif // !_MPBETA
+}
+
 void Cmd_Abilities_f(const idCmdArgs& args) {
 	idPlayer* player;
 
@@ -3269,6 +3318,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 // RITUAL END
 	cmdSystem->AddCommand("abilities", Cmd_Abilities_f, CMD_FL_GAME, "enables the ability menu and slows game time");
 	cmdSystem->AddCommand("modhelp", Cmd_ModHelp_f, CMD_FL_GAME, "shows both some helpful tips and the list of new commands in the console");
+	cmdSystem->AddCommand("spawnteam", Cmd_SpawnTeam_f, CMD_FL_GAME, "spawns 2 basic marine allies to help you");
 
 }
 
