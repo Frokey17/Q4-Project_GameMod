@@ -579,10 +579,11 @@ void Cmd_CenterView_f( const idCmdArgs &args ) {
 /*
 ==================
 
-Custom Commands
+Custom Mod Commands
 
 ==================
 */
+
 
 void Cmd_SpawnTeam_f(const idCmdArgs& args) {
 #ifndef _MPBETA
@@ -643,9 +644,15 @@ void Cmd_Abilities_f(const idCmdArgs& args) {
 
 	if (cvarSystem->GetCVarFloat("timeScale") >= 1.0f) {
 		cvarSystem->SetCVarFloat("timeScale", 0.2f); // slows down time on first click
+		if (player && player->hud) {
+			player->hud->HandleNamedEvent("showAbilities");
+		}
 	}
 	else {
-		cvarSystem->SetCVarFloat("timeScale", 1.0f); // buts time back to normal on second click
+		cvarSystem->SetCVarFloat("timeScale", 1.0f); // puts time back to normal on second click
+		if (player && player->hud) {
+			player->hud->HandleNamedEvent("hideAbilities");
+		}
 	}
 }
 
