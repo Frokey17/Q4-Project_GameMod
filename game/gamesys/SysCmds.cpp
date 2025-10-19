@@ -585,6 +585,43 @@ Custom Mod Commands
 */
 
 
+void KillEntitiesMod(const idCmdArgs& args, const idTypeInfo& superClass) {
+	idEntity* ent;
+	idStrList	ignore;
+	const char* name;
+	int			i;
+
+	if (!gameLocal.GetLocalPlayer() ) {
+		return;
+	}
+
+	for (i = 1; i < args.Argc(); i++) {
+		name = args.Argv(i);
+		ignore.Append(name);
+	}
+
+	for (ent = gameLocal.spawnedEntities.Next(); ent != NULL; ent = ent->spawnNode.Next()) {
+		if (ent->IsType(superClass)) {
+
+			idActor* actor = static_cast<idActor*>(ent);
+
+			if (actor->team != AITEAM_MARINE) {
+				continue;
+			}
+
+			for (i = 0; i < ignore.Num(); i++) {
+				if (ignore[i] == ent->name) {
+					break;
+				}
+			}
+
+			if (i >= ignore.Num()) {
+				ent->PostEventMS(&EV_Remove, 0);
+			}
+		}
+	}
+}
+
 void Cmd_SpawnTeam_f(const idCmdArgs& args) {
 #ifndef _MPBETA
 	const char* key, * value;
@@ -598,6 +635,8 @@ void Cmd_SpawnTeam_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
+
+	KillEntitiesMod(args, idAI::GetClassType());
 
 	yaw = player->viewAngles.yaw;
 
