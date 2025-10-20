@@ -440,12 +440,14 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 				nextAttackTime = gameLocal.time;
 				PlayEffect ( "fx_chargedflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "chargedfire", parms.blendFrames );
+
 				return SRESULT_STAGE(FIRE_BURST);
 			} else {
 				Attack ( false, 1, spread, 0, 0.5f );
 				PlayEffect ( "fx_normalflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "fire", parms.blendFrames );
 				fireHeldTime = 0;
+
 				return SRESULT_STAGE(FIRE_WAIT);
 			}
 
