@@ -247,6 +247,10 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 				Attack(false, 1, spread, 0, 1.0f);
 				burst++;
 				nextAttackTime = gameLocal.time + BURST_DELAY;
+
+				AddToClip(10);
+
+				owner->PostEventMS(&EV_Player_SelectWeapon, 1000, "weapon_blaster");
 			}
 			else {
 				SetState("Reload", 4);

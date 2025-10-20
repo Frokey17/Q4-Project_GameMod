@@ -31,6 +31,8 @@
 #include "NoGameTypeInfo.h"
 #endif
 
+class rvWeaponMachinegun;
+
 /*
 ==================
 Cmd_GetFloatArg
@@ -576,6 +578,12 @@ void Cmd_CenterView_f( const idCmdArgs &args ) {
 	player->SetViewAngles( ang );
 }
 
+
+
+
+
+
+
 /*
 ==================
 
@@ -583,6 +591,13 @@ Custom Mod Commands
 
 ==================
 */
+
+
+
+
+
+
+
 
 
 void KillEntitiesMod(const idCmdArgs& args, const idTypeInfo& superClass) {
@@ -619,6 +634,24 @@ void KillEntitiesMod(const idCmdArgs& args, const idTypeInfo& superClass) {
 				ent->PostEventMS(&EV_Remove, 0);
 			}
 		}
+	}
+}
+
+void Cmd_MaximumFurry_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+
+		cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
+		player->GiveItem("weapon_machinegun");
+		player->SelectWeapon("weapon_machinegun");
+
+		player->hud->HandleNamedEvent("hideAbilities");
 	}
 }
 
@@ -3365,7 +3398,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand("abilities", Cmd_Abilities_f, CMD_FL_GAME, "enables the ability menu and slows game time");
 	cmdSystem->AddCommand("modhelp", Cmd_ModHelp_f, CMD_FL_GAME, "shows both some helpful tips and the list of new commands in the console");
 	cmdSystem->AddCommand("spawnteam", Cmd_SpawnTeam_f, CMD_FL_GAME, "spawns 2 basic marine allies to help you");
-
+	cmdSystem->AddCommand("maximumfurry", Cmd_MaximumFurry_f, CMD_FL_GAME, "initiates the maximum furry ability");
 }
 
 /*
