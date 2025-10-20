@@ -315,7 +315,14 @@ stateResult_t rvWeaponDarkMatterGun::State_Fire ( const stateParms_t& parms ) {
 
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			Attack ( false, 1, spread, 0, 0.02f );
-			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
+			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );
+
+			cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
+			AddToClip(100);
+
+			owner->PostEventMS(&EV_Player_SelectWeapon, 1000, "weapon_blaster");
+
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		

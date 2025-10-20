@@ -645,11 +645,128 @@ void Cmd_MaximumFurry_f(const idCmdArgs& args) {
 		return;
 	}
 	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
-
-		cvarSystem->SetCVarFloat("timeScale", 1.0f);
-
 		player->GiveItem("weapon_machinegun");
 		player->SelectWeapon("weapon_machinegun");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_PointBlank_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+		player->GiveItem("weapon_shotgun");
+		player->SelectWeapon("weapon_shotgun");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_FocusedShot_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+		player->GiveItem("weapon_hyperblaster");
+		player->SelectWeapon("weapon_hyperblaster");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_BladeBurst_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+		player->GiveItem("weapon_grenadelauncher");
+		player->SelectWeapon("weapon_grenadelauncher");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_SoulDrain_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+		player->GiveItem("weapon_railgun");
+		player->SelectWeapon("weapon_railgun");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_SteelSkin_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+		player->GiveItem("weapon_nailgun");
+		player->SelectWeapon("weapon_nailgun");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_RayOfJudgement_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+		player->GiveItem("weapon_lightninggun");
+		player->SelectWeapon("weapon_lightninggun");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_SorcerousStorm_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+		player->GiveItem("weapon_napalmgun");
+		player->SelectWeapon("weapon_napalmgun");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_ChiTrap_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+		player->GiveItem("weapon_dmg");
+		player->SelectWeapon("weapon_dmg");
 
 		player->hud->HandleNamedEvent("hideAbilities");
 	}
@@ -3399,6 +3516,14 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand("modhelp", Cmd_ModHelp_f, CMD_FL_GAME, "shows both some helpful tips and the list of new commands in the console");
 	cmdSystem->AddCommand("spawnteam", Cmd_SpawnTeam_f, CMD_FL_GAME, "spawns 2 basic marine allies to help you");
 	cmdSystem->AddCommand("maximumfurry", Cmd_MaximumFurry_f, CMD_FL_GAME, "initiates the maximum furry ability");
+	cmdSystem->AddCommand("pointblank", Cmd_PointBlank_f, CMD_FL_GAME, "initiates the point blank ability");
+	cmdSystem->AddCommand("focusedshot", Cmd_FocusedShot_f, CMD_FL_GAME, "initiates the focused shot ability");
+	cmdSystem->AddCommand("bladeburst", Cmd_BladeBurst_f, CMD_FL_GAME, "initiates the blade burst ability");
+	cmdSystem->AddCommand("souldrain", Cmd_SoulDrain_f, CMD_FL_GAME, "initiates the soul drain ability");
+	cmdSystem->AddCommand("steelskin", Cmd_SteelSkin_f, CMD_FL_GAME, "initiates the steel skin ability");
+	cmdSystem->AddCommand("rayofjudgement", Cmd_RayOfJudgement_f, CMD_FL_GAME, "initiates the ray of judgement ability");
+	cmdSystem->AddCommand("sorcerousstorm", Cmd_SorcerousStorm_f, CMD_FL_GAME, "initiates the sorcerous storm ability");
+	cmdSystem->AddCommand("chitrap", Cmd_ChiTrap_f, CMD_FL_GAME, "initiates the chi trap ability");
 }
 
 /*

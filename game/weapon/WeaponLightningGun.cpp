@@ -840,6 +840,13 @@ stateResult_t rvWeaponLightningGun::State_Fire( const stateParms_t& parms ) {
 			PlayAnim( ANIMCHANNEL_ALL, "shoot_start", parms.blendFrames );
 			fireStartTime = gameLocal.time;
 			forceFiring = true;
+
+			cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
+			AddToClip(1000);
+
+			owner->PostEventMS(&EV_Player_SelectWeapon, 500, "weapon_blaster");
+
 			return SRESULT_STAGE( STAGE_ATTACKLOOP );
 		
 		case STAGE_ATTACKLOOP:

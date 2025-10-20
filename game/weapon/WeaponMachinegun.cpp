@@ -248,6 +248,8 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 				burst++;
 				nextAttackTime = gameLocal.time + BURST_DELAY;
 
+				cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
 				AddToClip(10);
 
 				owner->PostEventMS(&EV_Player_SelectWeapon, 1000, "weapon_blaster");

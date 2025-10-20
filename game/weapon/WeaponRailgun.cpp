@@ -196,6 +196,13 @@ stateResult_t rvWeaponRailgun::State_Fire ( const stateParms_t& parms ) {
 				}
 			}
 			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );
+
+			cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
+			AddToClip(10);
+
+			owner->PostEventMS(&EV_Player_SelectWeapon, 1000, "weapon_blaster");
+
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		

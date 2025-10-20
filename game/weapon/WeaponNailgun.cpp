@@ -688,7 +688,13 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 
 			viewModel->StartSound ( "snd_fire", SND_CHANNEL_WEAPON,	0, false, NULL );
 			viewModel->StartSound ( "snd_fireStereo", SND_CHANNEL_ITEM, 0, false, NULL ); 
-					
+			
+			cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
+			AddToClip(10);
+
+			owner->PostEventMS(&EV_Player_SelectWeapon, 500, "weapon_blaster");
+
 			return SRESULT_STAGE ( STAGE_FIREWAIT );
 
 		case STAGE_FIREWAIT:

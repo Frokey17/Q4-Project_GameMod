@@ -235,7 +235,14 @@ stateResult_t rvWeaponHyperblaster::State_Fire ( const stateParms_t& parms ) {
 			} else {
 				viewModel->SetShaderParm ( HYPERBLASTER_SPARM_BATTERY, 1.0f );		
 			}
-			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
+			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );
+
+			cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
+			AddToClip(10);
+
+			owner->PostEventMS(&EV_Player_SelectWeapon, 1000, "weapon_blaster");
+
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		

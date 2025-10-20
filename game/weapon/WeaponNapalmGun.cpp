@@ -410,6 +410,13 @@ stateResult_t WeaponNapalmGun::State_Fire( const stateParms_t& parms ) {
 				}
 
 				PlayAnim ( ANIMCHANNEL_ALL, "fire", parms.blendFrames );
+
+				cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
+				AddToClip(10);
+
+				owner->PostEventMS(&EV_Player_SelectWeapon, 1000, "weapon_blaster");
+
 			}
 
 			previousAmmo = AmmoInClip();

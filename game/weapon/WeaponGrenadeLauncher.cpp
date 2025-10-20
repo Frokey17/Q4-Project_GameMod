@@ -147,6 +147,13 @@ stateResult_t rvWeaponGrenadeLauncher::State_Fire ( const stateParms_t& parms ) 
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			Attack ( false, 5, 30, 0, 1.0f );
 			PlayAnim ( ANIMCHANNEL_ALL, GetFireAnim(), 0 );	
+
+			cvarSystem->SetCVarFloat("timeScale", 1.0f);
+
+			AddToClip(10);
+
+			owner->PostEventMS(&EV_Player_SelectWeapon, 1000, "weapon_blaster");
+
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		
