@@ -822,6 +822,9 @@ stateResult_t rvWeaponLightningGun::State_Fire( const stateParms_t& parms ) {
 		STAGE_DONE,
 		STAGE_DONEWAIT
 	};	
+
+	idPlayer* player = gameLocal.GetLocalPlayer();
+
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			StartSound( "snd_fire", SND_CHANNEL_WEAPON, 0, false, NULL );
@@ -844,6 +847,51 @@ stateResult_t rvWeaponLightningGun::State_Fire( const stateParms_t& parms ) {
 			cvarSystem->SetCVarFloat("timeScale", 1.0f);
 
 			AddToClip(1000);
+
+			player->energy -= 30.0f;
+
+			if ((player->energy < 19.0f)) {
+				player->hud->HandleNamedEvent("hideenergy_20");
+				player->hud->HandleNamedEvent("hideenergy_40");
+				player->hud->HandleNamedEvent("hideenergy_60");
+				player->hud->HandleNamedEvent("hideenergy_80");
+				player->hud->HandleNamedEvent("hideenergy_100");
+			}
+			else if ((player->energy > 19.0f) && (player->energy < 39.0f)) {
+				player->hud->HandleNamedEvent("showenergy_20");
+				player->hud->HandleNamedEvent("hideenergy_40");
+				player->hud->HandleNamedEvent("hideenergy_60");
+				player->hud->HandleNamedEvent("hideenergy_80");
+				player->hud->HandleNamedEvent("hideenergy_100");
+			}
+			else if ((player->energy > 39.0f) && (player->energy < 59.0f)) {
+				player->hud->HandleNamedEvent("showenergy_20");
+				player->hud->HandleNamedEvent("showenergy_40");
+				player->hud->HandleNamedEvent("hideenergy_60");
+				player->hud->HandleNamedEvent("hideenergy_80");
+				player->hud->HandleNamedEvent("hideenergy_100");
+			}
+			else if ((player->energy > 59.0f) && (player->energy < 79.0f)) {
+				player->hud->HandleNamedEvent("showenergy_20");
+				player->hud->HandleNamedEvent("showenergy_40");
+				player->hud->HandleNamedEvent("showenergy_60");
+				player->hud->HandleNamedEvent("hideenergy_80");
+				player->hud->HandleNamedEvent("hideenergy_100");
+			}
+			else if ((player->energy > 79.0f) && (player->energy < 99.0f)) {
+				player->hud->HandleNamedEvent("showenergy_20");
+				player->hud->HandleNamedEvent("showenergy_40");
+				player->hud->HandleNamedEvent("showenergy_60");
+				player->hud->HandleNamedEvent("showenergy_80");
+				player->hud->HandleNamedEvent("hideenergy_100");
+			}
+			else if ((player->energy > 99.0f) && (player->energy < 101.0f)) {
+				player->hud->HandleNamedEvent("showenergy_20");
+				player->hud->HandleNamedEvent("showenergy_40");
+				player->hud->HandleNamedEvent("showenergy_60");
+				player->hud->HandleNamedEvent("showenergy_80");
+				player->hud->HandleNamedEvent("showenergy_100");
+			}
 
 			owner->PostEventMS(&EV_Player_SelectWeapon, 500, "weapon_blaster");
 

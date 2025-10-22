@@ -640,6 +640,15 @@ void KillEntitiesMod(const idCmdArgs& args, const idTypeInfo& superClass) {
 idStr battleMode = "off";
 
 void Cmd_BattleMode_f(const idCmdArgs& args) {
+
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+
+	player->energy = 0.0f;
+
+	player->hud->HandleNamedEvent("showEnergy");
+
 	if (battleMode == "off") {
 		battleMode = "on";
 
@@ -689,9 +698,16 @@ void Cmd_BattleMode_f(const idCmdArgs& args) {
 	#endif
 	}
 	else if (battleMode == "on") {
+
+		idPlayer* player;
+
+		player = gameLocal.GetLocalPlayer();
+
 		battleMode = "off";
 
 		KillEntitiesMod(args, idAI::GetClassType());
+
+		player->hud->HandleNamedEvent("hideEnergy");
 	}
 }
 
@@ -702,7 +718,7 @@ void Cmd_MaximumFurry_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 20.0f)) {
 		player->GiveItem("weapon_machinegun");
 		player->SelectWeapon("weapon_machinegun");
 
@@ -717,7 +733,7 @@ void Cmd_PointBlank_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 30.0f)) {
 		player->GiveItem("weapon_shotgun");
 		player->SelectWeapon("weapon_shotgun");
 
@@ -732,7 +748,7 @@ void Cmd_FocusedShot_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 20.0f)) {
 		player->GiveItem("weapon_hyperblaster");
 		player->SelectWeapon("weapon_hyperblaster");
 
@@ -747,7 +763,7 @@ void Cmd_BladeBurst_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 50.0f)) {
 		player->GiveItem("weapon_grenadelauncher");
 		player->SelectWeapon("weapon_grenadelauncher");
 
@@ -762,7 +778,7 @@ void Cmd_SoulDrain_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 20.0f)) {
 		player->GiveItem("weapon_railgun");
 		player->SelectWeapon("weapon_railgun");
 
@@ -777,7 +793,7 @@ void Cmd_SteelSkin_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 60.0f)) {
 		player->GiveItem("weapon_nailgun");
 		player->SelectWeapon("weapon_nailgun");
 
@@ -792,7 +808,7 @@ void Cmd_RayOfJudgement_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 30.0f)) {
 		player->GiveItem("weapon_lightninggun");
 		player->SelectWeapon("weapon_lightninggun");
 
@@ -807,7 +823,7 @@ void Cmd_SorcerousStorm_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 20.0f)) {
 		player->GiveItem("weapon_napalmgun");
 		player->SelectWeapon("weapon_napalmgun");
 
@@ -822,7 +838,7 @@ void Cmd_ChiTrap_f(const idCmdArgs& args) {
 	if (!player) {
 		return;
 	}
-	if (cvarSystem->GetCVarFloat("timeScale") == 0.2f) {
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->energy >= 100.0f)) {
 		player->GiveItem("weapon_dmg");
 		player->SelectWeapon("weapon_dmg");
 

@@ -408,6 +408,7 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 		FIRE_BURST,
 		FIRE_WAIT,
 	};	
+	idPlayer* player = gameLocal.GetLocalPlayer();
 
 	static int burst = 0;
 
@@ -441,12 +442,106 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 				PlayEffect ( "fx_chargedflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "chargedfire", parms.blendFrames );
 
+				if (player->energy < player->maxEnergy) {
+					player->energy += 5.0f;
+				}
+
+				if ((player->energy < 19.0f)) {
+					player->hud->HandleNamedEvent("hideenergy_20");
+					player->hud->HandleNamedEvent("hideenergy_40");
+					player->hud->HandleNamedEvent("hideenergy_60");
+					player->hud->HandleNamedEvent("hideenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 19.0f) && (player->energy < 39.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("hideenergy_40");
+					player->hud->HandleNamedEvent("hideenergy_60");
+					player->hud->HandleNamedEvent("hideenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 39.0f) && (player->energy < 59.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("showenergy_40");
+					player->hud->HandleNamedEvent("hideenergy_60");
+					player->hud->HandleNamedEvent("hideenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 59.0f) && (player->energy < 79.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("showenergy_40");
+					player->hud->HandleNamedEvent("showenergy_60");
+					player->hud->HandleNamedEvent("hideenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 79.0f) && (player->energy < 99.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("showenergy_40");
+					player->hud->HandleNamedEvent("showenergy_60");
+					player->hud->HandleNamedEvent("showenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 99.0f) && (player->energy < 101.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("showenergy_40");
+					player->hud->HandleNamedEvent("showenergy_60");
+					player->hud->HandleNamedEvent("showenergy_80");
+					player->hud->HandleNamedEvent("showenergy_100");
+				}
+
 				return SRESULT_STAGE(FIRE_BURST);
 			} else {
 				Attack ( false, 1, spread, 0, 0.5f );
 				PlayEffect ( "fx_normalflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "fire", parms.blendFrames );
 				fireHeldTime = 0;
+
+				if (player->energy < player->maxEnergy) {
+					player->energy += 10.0f;
+				}
+
+				if ((player->energy < 19.0f)) {
+					player->hud->HandleNamedEvent("hideenergy_20");
+					player->hud->HandleNamedEvent("hideenergy_40");
+					player->hud->HandleNamedEvent("hideenergy_60");
+					player->hud->HandleNamedEvent("hideenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 19.0f) && (player->energy < 39.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("hideenergy_40");
+					player->hud->HandleNamedEvent("hideenergy_60");
+					player->hud->HandleNamedEvent("hideenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 39.0f) && (player->energy < 59.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("showenergy_40");
+					player->hud->HandleNamedEvent("hideenergy_60");
+					player->hud->HandleNamedEvent("hideenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 59.0f) && (player->energy < 79.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("showenergy_40");
+					player->hud->HandleNamedEvent("showenergy_60");
+					player->hud->HandleNamedEvent("hideenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 79.0f) && (player->energy < 99.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("showenergy_40");
+					player->hud->HandleNamedEvent("showenergy_60");
+					player->hud->HandleNamedEvent("showenergy_80");
+					player->hud->HandleNamedEvent("hideenergy_100");
+				}
+				else if ((player->energy > 99.0f) && (player->energy < 101.0f)) {
+					player->hud->HandleNamedEvent("showenergy_20");
+					player->hud->HandleNamedEvent("showenergy_40");
+					player->hud->HandleNamedEvent("showenergy_60");
+					player->hud->HandleNamedEvent("showenergy_80");
+					player->hud->HandleNamedEvent("showenergy_100");
+				}
 
 				return SRESULT_STAGE(FIRE_WAIT);
 			}
