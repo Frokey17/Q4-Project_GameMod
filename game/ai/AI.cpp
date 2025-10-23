@@ -1797,7 +1797,7 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 
 		if (player->currentLevel < 5) {
 
-			player->currentXP += 60;
+			player->currentXP += 80;
 
 			if (player->currentXP >= (500 * player->currentLevel)) {
 				player->currentXP = 0;

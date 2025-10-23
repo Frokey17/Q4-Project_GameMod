@@ -1141,14 +1141,38 @@ void Cmd_Abilities_f(const idCmdArgs& args) {
 }
 
 void Cmd_ModHelp_f(const idCmdArgs& args) {
-	gameLocal.Printf("Helpful Tips:\n");
-	gameLocal.Printf("1. Make sure to use the spawnTeam command first to spawn the other members of your team.\n");
-	gameLocal.Printf("2. Make sure to look at the README.md to see what the abilities look like and do. Also look at it to see the new keybinds\n");
+	gameLocal.Printf("Helpful Tips: \n");
+	gameLocal.Printf("1. Make sure to click L before starting any combat and make sure to click it again after you finished combat \n");
+	gameLocal.Printf("2. Make sure to look at the README.md to see the description of what each ability and item does \n");
 	gameLocal.Printf("\n");
-	gameLocal.Printf("New Mod Commands:\n");
-	gameLocal.Printf("1. abilities			-	Slows game time and opens UI for the ability menu to show the different abilities.\n");
-	gameLocal.Printf("2. spawnTeam			-	Spawns 2 extra NPCs who can fight on their own and use abilities.\n");
-	gameLocal.Printf("3. switchPlayers		-	Switches the ability command between you and the 2 other NPCs.\n");
+	gameLocal.Printf("For help with combat type helpCombat \n");
+	gameLocal.Printf("For help with items type helpItem \n");
+	gameLocal.Printf("For help with level up system type helpLevel \n");
+}
+
+void Cmd_ModHelpCombat_f(const idCmdArgs& args) {
+	gameLocal.Printf("The combat system starts once you click L to initiate battle mode \n");
+	gameLocal.Printf("Once clicked you hud will change and you will gain the ability to activate your abilites which are linked to Q \n");
+	gameLocal.Printf("Once you click Q you will see a list of abilites along with their designated keybinds, time will also be slowed down. Each ability has their own energy requirment which can be found in README.md \n");
+	gameLocal.Printf("Once an ability is used your enrgy will decrease/increase accordingly and time will be put back to normal \n");
+	gameLocal.Printf("You can gain energy by fireing your default blaster, using certain abilites, or using certain items \n");
+	gameLocal.Printf("To go back to main help screen type modHelp \n");
+}
+
+void Cmd_ModHelpItem_f(const idCmdArgs& args) {
+	gameLocal.Printf("Once in battle mode your hud will be updated to show the items bar \n");
+	gameLocal.Printf("The items bar can hold up to 3 item points which are gained by killing an enemy \n");
+	gameLocal.Printf("Once you click Q you will see a list of items along with their keybinds, time will aslo be slowed down. Each item has its own item point requirment which can be found in README.md \n");
+	gameLocal.Printf("Once an item is used your item points will decrease accordingly and time will be put back to normal \n");
+	gameLocal.Printf("To go back to main help screen type modHelp \n");
+}
+
+void Cmd_ModHelpLevel_f(const idCmdArgs& args) {
+	gameLocal.Printf("Once you make a new game you will start at level 1 \n");
+	gameLocal.Printf("You gain xp by dealing the final blow to enemies \n");
+	gameLocal.Printf("Once you reach a certain amount xp you will level up, level 5 being the max, and your xp will be reset to 0 \n");
+	gameLocal.Printf("You can see your current level in bottom middle of the screen \n");
+	gameLocal.Printf("To go back to main help screen type modHelp \n");
 }
  
 /*
@@ -3808,7 +3832,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
 // RITUAL END
 	cmdSystem->AddCommand("abilities", Cmd_Abilities_f, CMD_FL_GAME, "enables the ability menu and slows game time");
-	cmdSystem->AddCommand("modhelp", Cmd_ModHelp_f, CMD_FL_GAME, "shows both some helpful tips and the list of new commands in the console");
+	cmdSystem->AddCommand("modHelp", Cmd_ModHelp_f, CMD_FL_GAME, "shows both some helpful tips and the list of new commands in the console");
 	cmdSystem->AddCommand("spawnteam", Cmd_BattleMode_f, CMD_FL_GAME, "spawns 2 basic marine allies to help you");
 	cmdSystem->AddCommand("maximumfurry", Cmd_MaximumFurry_f, CMD_FL_GAME, "initiates the maximum furry ability");
 	cmdSystem->AddCommand("pointblank", Cmd_PointBlank_f, CMD_FL_GAME, "initiates the point blank ability");
@@ -3824,6 +3848,9 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand("ether", Cmd_Ether_f, CMD_FL_GAME, "increases energy by 40");
 	cmdSystem->AddCommand("elixir", Cmd_Elixir_f, CMD_FL_GAME, "sets health and energy to max");
 	cmdSystem->AddCommand("armorcore", Cmd_ArmorCore_f, CMD_FL_GAME, "increases and sets armor to 200");
+	cmdSystem->AddCommand("helpCombat", Cmd_ModHelpCombat_f, CMD_FL_GAME, "shows both some helpful tips and the list of new commands in the console");
+	cmdSystem->AddCommand("helpItem", Cmd_ModHelpItem_f, CMD_FL_GAME, "shows both some helpful tips and the list of new commands in the console");
+	cmdSystem->AddCommand("helpLevel", Cmd_ModHelpLevel_f, CMD_FL_GAME, "shows both some helpful tips and the list of new commands in the console");
 }
 
 /*
