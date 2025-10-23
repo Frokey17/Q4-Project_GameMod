@@ -1771,38 +1771,41 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 	gameLocal.Printf("Enemy killed");
 
 	if (player) {
-		
-		player->currentXP += 500;
 
-		if (player->currentXP >= (500 * player->currentLevel)) {
-			player->currentXP = 0;
-			player->currentLevel++;
+		if (player->currentLevel < 5) {
 
-			player->hud->HandleNamedEvent("showLevelUpNot");
+			player->currentXP += 60;
 
-			if (player->currentLevel == 2) {
-				player->hud->HandleNamedEvent("showlevel2");
-				player->hud->HandleNamedEvent("hidelevel1");
+			if (player->currentXP >= (500 * player->currentLevel)) {
+				player->currentXP = 0;
+				player->currentLevel++;
 
-				player->levelDM = 1.5f;
-			}
-			else if (player->currentLevel == 3) {
-				player->hud->HandleNamedEvent("showlevel3");
-				player->hud->HandleNamedEvent("hidelevel2");
+				player->hud->HandleNamedEvent("showLevelUpNot");
 
-				player->levelDM = 2.0f;
-			}
-			else if (player->currentLevel == 4) {
-				player->hud->HandleNamedEvent("showlevel4");
-				player->hud->HandleNamedEvent("hidelevel3");
+				if (player->currentLevel == 2) {
+					player->hud->HandleNamedEvent("showlevel2");
+					player->hud->HandleNamedEvent("hidelevel1");
 
-				player->levelDM = 2.5f;
-			}
-			else if (player->currentLevel == 5) {
-				player->hud->HandleNamedEvent("showlevel5");
-				player->hud->HandleNamedEvent("hidelevel4");
+					player->levelDM = 1.5f;
+				}
+				else if (player->currentLevel == 3) {
+					player->hud->HandleNamedEvent("showlevel3");
+					player->hud->HandleNamedEvent("hidelevel2");
 
-				player->levelDM = 3.0f;
+					player->levelDM = 2.0f;
+				}
+				else if (player->currentLevel == 4) {
+					player->hud->HandleNamedEvent("showlevel4");
+					player->hud->HandleNamedEvent("hidelevel3");
+
+					player->levelDM = 2.5f;
+				}
+				else if (player->currentLevel == 5) {
+					player->hud->HandleNamedEvent("showlevel5");
+					player->hud->HandleNamedEvent("hidelevel4");
+
+					player->levelDM = 3.0f;
+				}
 			}
 		}
 	}
