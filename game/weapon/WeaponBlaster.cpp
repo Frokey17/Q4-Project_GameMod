@@ -443,7 +443,7 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 				PlayAnim( ANIMCHANNEL_ALL, "chargedfire", parms.blendFrames );
 
 				if (player->energy < player->maxEnergy) {
-					player->energy += 5.0f;
+					player->energy += 10.0f;
 				}
 
 				if ((player->energy < 19.0f)) {
@@ -491,13 +491,13 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 
 				return SRESULT_STAGE(FIRE_BURST);
 			} else {
-				Attack ( false, 1, spread, 0, 0.5f );
+				Attack ( false, 1, spread, 0, 0.5f);
 				PlayEffect ( "fx_normalflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "fire", parms.blendFrames );
 				fireHeldTime = 0;
 
 				if (player->energy < player->maxEnergy) {
-					player->energy += 10.0f;
+					player->energy += 5.0f;
 				}
 
 				if ((player->energy < 19.0f)) {

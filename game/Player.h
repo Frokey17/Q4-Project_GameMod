@@ -419,6 +419,12 @@ public:
 	float					energy;
 	float					maxEnergy;
 
+	//XP System
+	int 					currentXP;
+	int						currentLevel;
+	int 					nextLevelXP;
+	float					levelDM;
+
 //RAVEN BEGIN
 // asalmon: the eneny the player is most likely currently aiming at
 #ifdef _XBOX

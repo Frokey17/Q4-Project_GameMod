@@ -652,7 +652,7 @@ void Cmd_BattleMode_f(const idCmdArgs& args) {
 	if (battleMode == "off") {
 		battleMode = "on";
 
-	#ifndef _MPBETA
+	/*#ifndef _MPBETA
 			const char* key, * value;
 			int			i;
 			float		yaw;
@@ -695,7 +695,7 @@ void Cmd_BattleMode_f(const idCmdArgs& args) {
 
 				yaw += 30;
 			}
-	#endif
+	#endif/**/
 	}
 	else if (battleMode == "on") {
 

@@ -1811,6 +1811,9 @@ void idPlayer::Spawn( void ) {
 
 	energy = 0.0f;
 	maxEnergy = 100.0f;
+	currentXP = 0;
+	currentLevel = 1;
+	levelDM = 1.0f;
 
 	if ( entityNumber >= MAX_CLIENTS ) {
 		gameLocal.Error( "entityNum > MAX_CLIENTS for player.  Player may only be spawned with a client." );
@@ -4283,6 +4286,10 @@ idPlayer::PowerUpModifier
 */
 float idPlayer::PowerUpModifier( int type ) {
 	float mod = 1.0f;
+
+	if (type == PMOD_PROJECTILE_DAMAGE || type == PMOD_MELEE_DAMAGE) {
+		mod = levelDM;
+	}
 
 	if ( PowerUpActive( POWERUP_QUADDAMAGE ) ) {
 		switch( type ) {
