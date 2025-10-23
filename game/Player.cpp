@@ -1814,6 +1814,7 @@ void idPlayer::Spawn( void ) {
 	currentXP = 0;
 	currentLevel = 1;
 	levelDM = 1.0f;
+	itemCount = 0; 
 
 	if ( entityNumber >= MAX_CLIENTS ) {
 		gameLocal.Error( "entityNum > MAX_CLIENTS for player.  Player may only be spawned with a client." );

@@ -425,6 +425,9 @@ public:
 	int 					nextLevelXP;
 	float					levelDM;
 
+	//Item
+	int 					itemCount;
+
 //RAVEN BEGIN
 // asalmon: the eneny the player is most likely currently aiming at
 #ifdef _XBOX

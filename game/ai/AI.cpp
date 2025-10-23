@@ -1768,9 +1768,32 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 		}
 	}
 
-	gameLocal.Printf("Enemy killed");
-
 	if (player) {
+
+		if (player->itemCount < 3) {
+			player->itemCount += 1;
+		}
+
+		if (player->itemCount == 0) {
+			player->hud->HandleNamedEvent("hideitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 1) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 2) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 3) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("showitem3");
+		}
 
 		if (player->currentLevel < 5) {
 

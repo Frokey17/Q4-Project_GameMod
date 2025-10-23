@@ -649,10 +649,18 @@ void Cmd_BattleMode_f(const idCmdArgs& args) {
 
 	player->hud->HandleNamedEvent("showEnergy");
 
+	player->hud->HandleNamedEvent("showItems");
+
+	player->hud->HandleNamedEvent("hideenergy_20");
+	player->hud->HandleNamedEvent("hideenergy_40");
+	player->hud->HandleNamedEvent("hideenergy_60");
+	player->hud->HandleNamedEvent("hideenergy_80");
+	player->hud->HandleNamedEvent("hideenergy_100");
+
 	if (battleMode == "off") {
 		battleMode = "on";
 
-	#ifndef _MPBETA
+	/*#ifndef _MPBETA
 			const char* key, * value;
 			int			i;
 			float		yaw;
@@ -695,7 +703,7 @@ void Cmd_BattleMode_f(const idCmdArgs& args) {
 
 				yaw += 30;
 			}
-	#endif
+	#endif */
 	}
 	else if (battleMode == "on") {
 
@@ -708,6 +716,8 @@ void Cmd_BattleMode_f(const idCmdArgs& args) {
 		KillEntitiesMod(args, idAI::GetClassType());
 
 		player->hud->HandleNamedEvent("hideEnergy");
+
+		player->hud->HandleNamedEvent("hideItems");
 	}
 }
 
@@ -843,6 +853,266 @@ void Cmd_ChiTrap_f(const idCmdArgs& args) {
 		player->SelectWeapon("weapon_dmg");
 
 		player->hud->HandleNamedEvent("hideAbilities");
+	}
+}
+
+void Cmd_Potion_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->itemCount > 0)) {
+		player->itemCount -= 1;
+
+		if (player->itemCount == 0) {
+			player->hud->HandleNamedEvent("hideitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 1) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 2) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 3) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("showitem3");
+		}
+
+		const float healAmount = 20.0f;
+		player->health += healAmount;
+		if (player->health > player->inventory.maxHealth) {
+			player->health = player->inventory.maxHealth;
+		}
+
+		player->hud->HandleNamedEvent("hideAbilities");
+
+		cvarSystem->SetCVarFloat("timeScale", 1.0f);
+	}
+}
+
+void Cmd_Ether_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->itemCount > 0)) {
+		player->itemCount -= 1;
+
+		if (player->itemCount == 0) {
+			player->hud->HandleNamedEvent("hideitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 1) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 2) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 3) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("showitem3");
+		}
+
+		float currEn = player->energy += 40.0f;
+		if (currEn > player->maxEnergy) {
+			player->energy = player->maxEnergy;
+		}
+		else {
+			player->energy = currEn;
+		}
+
+		if ((player->energy < 19.0f)) {
+			player->hud->HandleNamedEvent("hideenergy_20");
+			player->hud->HandleNamedEvent("hideenergy_40");
+			player->hud->HandleNamedEvent("hideenergy_60");
+			player->hud->HandleNamedEvent("hideenergy_80");
+			player->hud->HandleNamedEvent("hideenergy_100");
+		}
+		else if ((player->energy > 19.0f) && (player->energy < 39.0f)) {
+			player->hud->HandleNamedEvent("showenergy_20");
+			player->hud->HandleNamedEvent("hideenergy_40");
+			player->hud->HandleNamedEvent("hideenergy_60");
+			player->hud->HandleNamedEvent("hideenergy_80");
+			player->hud->HandleNamedEvent("hideenergy_100");
+		}
+		else if ((player->energy > 39.0f) && (player->energy < 59.0f)) {
+			player->hud->HandleNamedEvent("showenergy_20");
+			player->hud->HandleNamedEvent("showenergy_40");
+			player->hud->HandleNamedEvent("hideenergy_60");
+			player->hud->HandleNamedEvent("hideenergy_80");
+			player->hud->HandleNamedEvent("hideenergy_100");
+		}
+		else if ((player->energy > 59.0f) && (player->energy < 79.0f)) {
+			player->hud->HandleNamedEvent("showenergy_20");
+			player->hud->HandleNamedEvent("showenergy_40");
+			player->hud->HandleNamedEvent("showenergy_60");
+			player->hud->HandleNamedEvent("hideenergy_80");
+			player->hud->HandleNamedEvent("hideenergy_100");
+		}
+		else if ((player->energy > 79.0f) && (player->energy < 99.0f)) {
+			player->hud->HandleNamedEvent("showenergy_20");
+			player->hud->HandleNamedEvent("showenergy_40");
+			player->hud->HandleNamedEvent("showenergy_60");
+			player->hud->HandleNamedEvent("showenergy_80");
+			player->hud->HandleNamedEvent("hideenergy_100");
+		}
+		else if ((player->energy > 99.0f) && (player->energy < 101.0f)) {
+			player->hud->HandleNamedEvent("showenergy_20");
+			player->hud->HandleNamedEvent("showenergy_40");
+			player->hud->HandleNamedEvent("showenergy_60");
+			player->hud->HandleNamedEvent("showenergy_80");
+			player->hud->HandleNamedEvent("showenergy_100");
+		}
+		
+		player->hud->HandleNamedEvent("hideAbilities");
+
+		cvarSystem->SetCVarFloat("timeScale", 1.0f);
+	}
+}
+
+void Cmd_Elixir_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->itemCount >= 2)) {
+		player->itemCount -= 2;
+
+		if (player->itemCount == 0) {
+			player->hud->HandleNamedEvent("hideitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 1) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 2) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 3) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("showitem3");
+		}
+
+		player->health = player->inventory.maxHealth;
+		player->energy = player->maxEnergy;
+
+		player->hud->HandleNamedEvent("showenergy_20");
+		player->hud->HandleNamedEvent("showenergy_40");
+		player->hud->HandleNamedEvent("showenergy_60");
+		player->hud->HandleNamedEvent("showenergy_80");
+		player->hud->HandleNamedEvent("showenergy_100");
+
+		player->hud->HandleNamedEvent("hideAbilities");
+
+		cvarSystem->SetCVarFloat("timeScale", 1.0f);
+	}
+}
+
+void Cmd_ArmorCore_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->itemCount >= 2)) {
+		player->itemCount -= 2;
+
+		if (player->itemCount == 0) {
+			player->hud->HandleNamedEvent("hideitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 1) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 2) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 3) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("showitem3");
+		}
+
+		player->inventory.maxarmor = 200.0f;
+		player->inventory.armor = 200.0f;
+
+		player->hud->HandleNamedEvent("hideAbilities");
+
+		cvarSystem->SetCVarFloat("timeScale", 1.0f);
+	}
+}
+
+void Cmd_MegaPotion_f(const idCmdArgs& args) {
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	if ((cvarSystem->GetCVarFloat("timeScale") == 0.2f) && (player->itemCount >= 2)) {
+		player->itemCount -= 2;
+
+		if (player->itemCount == 0) {
+			player->hud->HandleNamedEvent("hideitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 1) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("hideitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 2) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("hideitem3");
+		}
+		else if (player->itemCount == 3) {
+			player->hud->HandleNamedEvent("showitem1");
+			player->hud->HandleNamedEvent("showitem2");
+			player->hud->HandleNamedEvent("showitem3");
+		}
+
+		const float healAmount = 60.0f;
+		player->health += healAmount;
+		if (player->health > player->inventory.maxHealth) {
+			player->health = player->inventory.maxHealth;
+		}
+
+		player->hud->HandleNamedEvent("hideAbilities");
+
+		cvarSystem->SetCVarFloat("timeScale", 1.0f);
 	}
 }
 
@@ -3549,6 +3819,11 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand("rayofjudgement", Cmd_RayOfJudgement_f, CMD_FL_GAME, "initiates the ray of judgement ability");
 	cmdSystem->AddCommand("sorcerousstorm", Cmd_SorcerousStorm_f, CMD_FL_GAME, "initiates the sorcerous storm ability");
 	cmdSystem->AddCommand("chitrap", Cmd_ChiTrap_f, CMD_FL_GAME, "initiates the chi trap ability");
+	cmdSystem->AddCommand("potion", Cmd_Potion_f, CMD_FL_GAME, "heals player for 20 hp");
+	cmdSystem->AddCommand("megapotion", Cmd_MegaPotion_f, CMD_FL_GAME, "heals player for 60 hp");
+	cmdSystem->AddCommand("ether", Cmd_Ether_f, CMD_FL_GAME, "increases energy by 40");
+	cmdSystem->AddCommand("elixir", Cmd_Elixir_f, CMD_FL_GAME, "sets health and energy to max");
+	cmdSystem->AddCommand("armorcore", Cmd_ArmorCore_f, CMD_FL_GAME, "increases and sets armor to 200");
 }
 
 /*
