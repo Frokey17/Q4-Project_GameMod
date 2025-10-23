@@ -112,5 +112,5 @@ Mods → name of your mod folder → Load Mod
         - Explains the level up system
         - Explains how to get back to modHelp
     - Added new commands for each ability (weapon)
-        -Each command will give and make the player select the weapon that is linkied to the ability
-        -They will also slow down time 
+        - Each command will give and make the player select the weapon that is linkied to the ability
+        - They will also slow down time 
